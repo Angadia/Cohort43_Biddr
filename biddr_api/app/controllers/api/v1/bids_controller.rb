@@ -1,11 +1,19 @@
 class Api::V1::BidsController < ApplicationController
+  before_action :authenticate_user!, only: [:create]
+
   def create
     auction = Auction.find(params[:auction_id])
     new_bid = Bid.new bid_params
     new_bid.auction = auction
+    new_bid.user = current_user
     if check_bid_amount(new_bid.bid_amount, auction.bids) == false
       render(
         json: { errors: 'bid amount cannot be lower than the previous bids' },
+        status: 422 # Unprocessable Entity
+      )
+    elsif auction.user == current_user
+      render(
+        json: { errors: 'cannot bid on your own auction' },
         status: 422 # Unprocessable Entity
       )
     elsif new_bid.save
