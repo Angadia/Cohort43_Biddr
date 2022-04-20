@@ -9,6 +9,7 @@ import WelcomePage from "./components/WelcomePage";
 import SignInPage from "./components/SignInPage";
 import AuctionShowPage from "./components/AuctionShowPage";
 import AuctionIndexPage from "./components/AuctionIndexPage";
+import AuctionNewPage from "./components/AuctionNewPage";
 
 export default function App() {
   const [user, setUser] = useState(sessionStorage.getItem("loggedInUser"));
@@ -38,14 +39,15 @@ export default function App() {
       </header>
       <div className="ui container segment">
         <Routes>
-          <Route path="/" element={<WelcomePage />} />
-          <Route exact path="/auctions" element={<AuctionIndexPage />} />
+          <Route exact path="/" element={<WelcomePage />} />
           <Route
             exact
             path="/sign_in"
             element={<SignInPage onSignIn={getCurrentUser} />}
           />
-          <Route path="/auctions/:id" element={<AuctionShowPage />} />
+          <Route exact path="/auctions/new" element={<AuctionNewPage />} />
+          <Route exact path="/auctions/:id" element={<AuctionShowPage />} />
+          <Route exact path="/auctions" element={<AuctionIndexPage />} />
         </Routes>
       </div>
     </BrowserRouter>

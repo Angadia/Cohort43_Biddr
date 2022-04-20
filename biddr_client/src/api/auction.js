@@ -12,4 +12,15 @@ export const Auction = {
       credentials: "include",
     }).then((res) => res.json());
   },
+
+  create(params) {
+    return fetch(`${baseUrl}/auctions`, {
+      credentials: "include",
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(params),
+    }).then((res) => res.json());
+  },
 };
