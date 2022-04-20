@@ -10,6 +10,7 @@ import SignInPage from "./components/SignInPage";
 import AuctionShowPage from "./components/AuctionShowPage";
 import AuctionIndexPage from "./components/AuctionIndexPage";
 import AuctionNewPage from "./components/AuctionNewPage";
+import AuthRoute from "./components/AuthRoute";
 
 export default function App() {
   const [user, setUser] = useState(sessionStorage.getItem("loggedInUser"));
@@ -45,7 +46,15 @@ export default function App() {
             path="/sign_in"
             element={<SignInPage onSignIn={getCurrentUser} />}
           />
-          <Route exact path="/auctions/new" element={<AuctionNewPage />} />
+          <Route
+            exact
+            path="/auctions/new"
+            element={
+              <AuthRoute isAllowed={!!user}>
+                <AuctionNewPage />
+              </AuthRoute>
+            }
+          />
           <Route exact path="/auctions/:id" element={<AuctionShowPage />} />
           <Route exact path="/auctions" element={<AuctionIndexPage />} />
         </Routes>
