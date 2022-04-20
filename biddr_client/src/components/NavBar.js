@@ -1,7 +1,14 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import { Session } from "../api/session";
 
-export default function NavBar() {
+export default function NavBar({ currentUser, onSignOut }) {
+  const handleSignOut = () => {
+    Session.destroy().then(() => {
+      onSignOut();
+    });
+  };
+
   return (
     <div className="ui secondary pointing menu">
       <NavLink to="/" className="item">
@@ -14,10 +21,22 @@ export default function NavBar() {
         <NavLink to="/auctions" className="item">
           Auctions
         </NavLink>
-        <NavLink to="/sign_in" className="item">
+        {currentUser ? (
+          <>
+            <span className="item">Welcome, {`${currentUser.full_name}`}</span>{" "}
+            <button className="item" onClick={handleSignOut}>Sign Out</button>
+          </>
+        ) : (
+          <>
+            <NavLink to="/sign_in" className="item">
               Sign In
-        </NavLink>
+            </NavLink>
+            <NavLink to="/sign_up" className="item">
+              Sign Up
+            </NavLink>
+          </>
+        )}
       </div>
     </div>
   );
-};
+}
