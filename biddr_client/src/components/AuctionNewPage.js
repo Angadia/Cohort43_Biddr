@@ -21,9 +21,9 @@ export default function AuctionNewPage() {
 
   return (
     <div>
-      {auction && !errors && (
+      {auction &&
         <Navigate to={`/auctions/${auction.id}`} replace={true} />
-      )}
+      }
       <AuctionNewForm
         errors={errors}
         submitForm={createNewAuction}

@@ -10,7 +10,7 @@ export default function BidList(props) {
       }}
     >
       <h2 className="ui horizontal divider header">Previous Bids</h2>
-      <ul className="ui list">
+      <ul className="ui list ">
         {props.bids.map((bid) => (
           <BidDetails key={bid.id} {...bid} />
         ))}

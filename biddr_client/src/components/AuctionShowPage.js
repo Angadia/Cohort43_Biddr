@@ -57,7 +57,7 @@ export default function AuctionShowPage() {
     <div className="Page">
       <AuctionDetails {...auction} />
       <form className="NewBidForm ui form" onSubmit={createBid}>
-        {hasError && errors.map((err) => <p>{err}</p>)}
+        {hasError && <p>{errors}</p>}
         <div className="field">
           <input
             type="number"

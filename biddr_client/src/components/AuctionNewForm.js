@@ -1,16 +1,15 @@
-export default function AuctionNewForm(props) {
+export default function AuctionNewForm({errors, submitForm}) {
   const getDataAndSubmit = (event) => {
     event.preventDefault();
     const { currentTarget } = event;
     const fd = new FormData(currentTarget);
 
-    props.submitForm({
+    submitForm({
       title: fd.get("title"),
       description: fd.get("description"),
       ends_at: fd.get("ends_at"),
       reserve_price: fd.get("reserve_price"),
     });
-    currentTarget.reset();
   };
 
   return (
@@ -18,6 +17,7 @@ export default function AuctionNewForm(props) {
       className="NewAuctionForm ui form"
       onSubmit={getDataAndSubmit}
     >
+      {errors && errors.map(error => <p>{error}</p>)}
       <div className="field">
         <label htmlFor="title">Title</label>
         <input type="text" name="title" id="title" required />

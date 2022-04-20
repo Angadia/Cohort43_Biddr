@@ -26,7 +26,7 @@ export default function NavBar({ currentUser, onSignOut }) {
             <NavLink to="/auctions/new" className="item">
               Auction New
             </NavLink>
-            <span className="item">Welcome, {`${currentUser.full_name}`}</span>{" "}
+            <span className="item">Welcome, {`${currentUser.full_name}`}</span>
             <button className="item" onClick={handleSignOut}>
               Sign Out
             </button>

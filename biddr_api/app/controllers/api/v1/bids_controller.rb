@@ -13,7 +13,7 @@ class Api::V1::BidsController < ApplicationController
       )
     elsif check_bid_amount(new_bid.bid_amount, auction.bids) == false
       render(
-        json: { errors: 'bid amount cannot be lower than the previous bids' },
+        json: { errors: 'bid amount cannot be lower than the last bid' },
         status: 422 # Unprocessable Entity
       )
     elsif new_bid.save

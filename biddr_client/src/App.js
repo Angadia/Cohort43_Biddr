@@ -19,14 +19,13 @@ export default function App() {
 
   useEffect(() => {
     getCurrentUser();
-  });
+  }, []);
 
   const getCurrentUser = () => {
     return User.current().then((user) => {
       if (user?.id) {
         sessionStorage.setItem("loggedInUser", JSON.stringify(user));
         setUser(user);
-        navigate("/auctions");
       }
     });
   };
