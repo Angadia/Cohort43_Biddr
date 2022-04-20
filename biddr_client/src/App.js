@@ -19,7 +19,7 @@ export default function App() {
 
   useEffect(() => {
     getCurrentUser();
-  }, []);
+  });
 
   const getCurrentUser = () => {
     return User.current().then((user) => {

@@ -13,7 +13,7 @@ export default function AuctionShowPage() {
   let { id } = useParams();
   const [auction, setAuction] = useState({});
   const [errors, setErrors] = useState([]);
-  const [noError, setNoError] = useState(true);
+  const [hasError, setHasError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -34,16 +34,16 @@ export default function AuctionShowPage() {
     };
 
     Bid.create(newBid).then((bid) => {
-      if (!bid.errors) {
+      if (bid.errors) {
+        setErrors(bid.errors);
+        setHasError(true);
+      } else {
         Auction.one(id).then((auction) => {
           setAuction(auction);
           setErrors([]);
-          setNoError(true);
+          setHasError(false);
           setIsLoading(false);
         });
-      } else {
-        setErrors(bid.errors);
-        setNoError(null);
       }
     });
 
@@ -57,12 +57,13 @@ export default function AuctionShowPage() {
     <div className="Page">
       <AuctionDetails {...auction} />
       <form className="NewBidForm ui form" onSubmit={createBid}>
-        {noError && errors.map((err) => <p>{err}</p>)}
+        {hasError && errors.map((err) => <p>{err}</p>)}
         <div className="field">
           <input
-            type="text"
+            type="number"
             name="new_bid_amount"
             id="new_bid_amount"
+            placeholder = "bid amount"
             required
           />
         </div>
