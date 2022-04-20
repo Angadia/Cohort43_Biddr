@@ -30,6 +30,11 @@ export default function App() {
     });
   };
 
+  const onSignUp = () => {
+    getCurrentUser();
+    navigate("/auctions");
+  };
+
   const onSignOut = () => {
     sessionStorage.removeItem("loggedInUser");
     setUser(null);
@@ -52,7 +57,7 @@ export default function App() {
           <Route
             exact
             path="/sign_up"
-            element={<SignUpPage onSignUp={getCurrentUser} />}
+            element={<SignUpPage onSignUp={onSignUp} />}
           />
           <Route
             exact

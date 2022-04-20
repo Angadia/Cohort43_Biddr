@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { User } from "../api/user";
 
 export default function SignUpPage(props) {
+  const [errors, setErrors] = useState([]);
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const { currentTarget: form } = event;
@@ -17,8 +19,10 @@ export default function SignUpPage(props) {
     };
 
     User.create(newUser).then((user) => {
-      if (user.id) {
+      if (user?.id) {
         props.onSignUp();
+      } else {
+        setErrors(user.errors);
       }
     });
   };
@@ -26,6 +30,14 @@ export default function SignUpPage(props) {
     <div className="ui clearing segment Page">
       <h1 className="ui center aligned header">Sign Up</h1>
       <form className="ui large form" onSubmit={handleSubmit}>
+        {errors.length > 0 ? (
+          <div className="ui negative message">
+            <div className="header">Failed to Sign Up</div>
+            <p>{errors.map((error) => error).join(", ")}</p>
+          </div>
+        ) : (
+          ""
+        )}
         <div className="field">
           <label htmlFor="first_name">First Name</label>
           <input type="text" name="first_name" id="first_name" />

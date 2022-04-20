@@ -17,7 +17,14 @@ export default function AuctionNewForm({errors, submitForm}) {
       className="NewAuctionForm ui form"
       onSubmit={getDataAndSubmit}
     >
-      {errors && errors.map(error => <p>{error}</p>)}
+      {errors?.length > 0 ? (
+          <div className="ui negative message">
+            <div className="header">Failed to create New Auction</div>
+            <p>{errors.map((error) => error).join(", ")}</p>
+          </div>
+        ) : (
+          ""
+        )}
       <div className="field">
         <label htmlFor="title">Title</label>
         <input type="text" name="title" id="title" required />

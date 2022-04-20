@@ -10,7 +10,7 @@ class Api::V1::UsersController < ApplicationController
       render json: { id: user.id }, status: 200
     else
       render(
-        json: { errors: user.errors.messages },
+        json: { errors: [user.errors.full_messages.join(', ')] },
         status: 422 # Unprocessable Entity
       )
     end
