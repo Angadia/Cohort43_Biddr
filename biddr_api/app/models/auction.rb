@@ -12,6 +12,8 @@ class Auction < ApplicationRecord
 
   validate :ends_at_cannot_be_in_the_past
 
+  default_scope { order(created_at: :DESC) }
+
   private
 
   def ends_at_cannot_be_in_the_past
