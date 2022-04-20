@@ -9,7 +9,7 @@ Rails.application.routes.draw do
       resources :auctions, only: %i[create show index]
       resources :bids, only: [:create]
       resource :session, only: %i[create destroy]
-      resource :user, only: [] do
+      resource :user, only: [:create] do
         get :current, on: :collection
       end
     end

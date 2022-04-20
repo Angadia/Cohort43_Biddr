@@ -1,18 +1,20 @@
 import "./App.css";
 import React from "react";
 import { useState, useEffect } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 
 import { User } from "./api/user";
 import NavBar from "./components/NavBar";
 import WelcomePage from "./components/WelcomePage";
 import SignInPage from "./components/SignInPage";
+import SignUpPage from "./components/SignUpPage";
 import AuctionShowPage from "./components/AuctionShowPage";
 import AuctionIndexPage from "./components/AuctionIndexPage";
 import AuctionNewPage from "./components/AuctionNewPage";
 import AuthRoute from "./components/AuthRoute";
 
 export default function App() {
+  let navigate = useNavigate();
   const [user, setUser] = useState(sessionStorage.getItem("loggedInUser"));
 
   useEffect(() => {
@@ -24,6 +26,7 @@ export default function App() {
       if (user?.id) {
         sessionStorage.setItem("loggedInUser", JSON.stringify(user));
         setUser(user);
+        navigate("/auctions");
       }
     });
   };
@@ -31,10 +34,11 @@ export default function App() {
   const onSignOut = () => {
     sessionStorage.removeItem("loggedInUser");
     setUser(null);
+    navigate("/");
   };
 
   return (
-    <BrowserRouter>
+    <div>
       <header>
         <NavBar currentUser={user} onSignOut={onSignOut} />
       </header>
@@ -45,6 +49,11 @@ export default function App() {
             exact
             path="/sign_in"
             element={<SignInPage onSignIn={getCurrentUser} />}
+          />
+          <Route
+            exact
+            path="/sign_up"
+            element={<SignUpPage onSignUp={getCurrentUser} />}
           />
           <Route
             exact
@@ -59,6 +68,6 @@ export default function App() {
           <Route exact path="/auctions" element={<AuctionIndexPage />} />
         </Routes>
       </div>
-    </BrowserRouter>
+    </div>
   );
 }
